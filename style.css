@@ -1,199 +1,123 @@
-/* --- Root Variables for Theme Control --- */
 :root {
-    --apple-black: #000000;
-    --deep-purple: #2e1065; /* Rich, medical tech purple */
-    --accent-cyan: #22d3ee;  /* Clean medical accent */
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --text-main: #f8fafc;
-    --text-dim: #94a3b8;
-    --font-apple: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --purple: #6366f1;
+    --deep-purple: #2e1065;
+    --glass: rgba(255, 255, 255, 0.4);
+    --border: rgba(255, 255, 255, 0.6);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    cursor: none; /* For custom cursor */
 }
 
 body {
-    background-color: var(--apple-black);
-    color: var(--text-main);
-    font-family: var(--font-apple);
-    line-height: 1.6;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #f0f2f5;
     overflow-x: hidden;
+    color: var(--deep-purple);
 }
 
-/* --- Navigation --- */
+/* --- Fluid Background --- */
+.gradient-bg {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: #fff;
+    filter: blur(80px);
+}
+
+.ball {
+    position: absolute;
+    border-radius: 50%;
+    animation: move 20s infinite alternate;
+}
+
+.ball-1 { width: 500px; height: 500px; background: #d8b4fe; top: -10%; left: -10%; }
+.ball-2 { width: 600px; height: 600px; background: #818cf8; bottom: -10%; right: -10%; animation-delay: -5s; }
+.ball-3 { width: 400px; height: 400px; background: #22d3ee; top: 40%; left: 30%; animation-delay: -10s; }
+
+@keyframes move {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(100px, 100px) rotate(360deg); }
+}
+
+/* --- Frosty Glass Elements --- */
+.glass-nav, .glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+}
+
 .glass-nav {
     position: fixed;
-    top: 0;
-    width: 100%;
-    height: 60px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(20px); /* Apple's signature blur */
-    border-bottom: 1px solid var(--glass-border);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-}
-
-.nav-content {
-    max-width: 1200px;
-    margin: 0 auto;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 90%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    max-width: 800px;
+    padding: 15px 30px;
+    z-index: 1000;
 }
 
-.logo {
-    font-weight: 800;
-    font-size: 1.2rem;
-    letter-spacing: -0.5px;
-    background: linear-gradient(to right, #fff, var(--accent-cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.links a {
-    color: var(--text-dim);
-    text-decoration: none;
-    margin-left: 2rem;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
-}
-
-.links a:hover {
-    color: var(--text-main);
-}
-
-/* --- Hero Section --- */
+/* --- Hero & 3D Profile --- */
 .hero {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: radial-gradient(circle at top right, var(--deep-purple), transparent 40%),
-                radial-gradient(circle at bottom left, #1e1b4b, transparent 40%);
 }
 
-.gradient-text {
-    font-size: 5rem;
-    font-weight: 800;
-    letter-spacing: -2px;
-    background: linear-gradient(to bottom, #ffffff, #a78bfa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 1rem;
+.profile-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    transform-style: preserve-3d;
 }
 
-.subtitle {
-    font-size: 1.5rem;
-    color: var(--accent-cyan);
-    font-weight: 300;
-    margin-bottom: 2rem;
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.apple-btn {
-    padding: 12px 30px;
-    background: #ffffff;
-    color: #000;
-    text-decoration: none;
-    border-radius: 30px;
-    font-weight: 600;
-    transition: transform 0.2s ease;
-    display: inline-block;
-}
+.hero-text h1 { font-size: 4rem; font-weight: 800; letter-spacing: -2px; }
+.badge { background: white; padding: 5px 20px; border-radius: 20px; display: inline-block; margin: 10px 0; font-weight: 600; }
 
-.apple-btn:hover {
-    transform: scale(1.05);
-}
-
-/* --- Content Sections --- */
-.section {
-    padding: 100px 0;
-}
-
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    width: 90%;
-}
-
-.section-title {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    text-align: center;
-}
-
-/* --- Glass Cards --- */
-.glass-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    padding: 40px;
-    border-radius: 24px;
-    transition: border 0.3s ease;
-}
-
-.glass-card:hover {
-    border: 1px solid var(--accent-cyan);
-}
-
-/* --- Timeline --- */
-.timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.timeline-item {
-    position: relative;
-}
-
-.date {
-    color: var(--accent-cyan);
-    font-weight: 600;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-/* --- Skills Grid --- */
-.skills-grid {
+/* --- Cards Grid --- */
+.grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 50px;
 }
 
-.skill-card {
-    background: var(--glass-bg);
-    padding: 30px;
-    border-radius: 20px;
-    text-align: center;
-    border: 1px solid var(--glass-border);
+.glass-card {
+    padding: 40px;
+    transition: 0.3s ease;
 }
 
-.skill-card .icon {
-    font-size: 2rem;
-    margin-bottom: 15px;
-}
-
-/* --- Footer --- */
-footer {
-    padding: 100px 0;
-    background: #0a0a0a;
-    text-align: center;
-}
-
-footer p {
-    color: var(--text-dim);
-    margin-top: 10px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .gradient-text { font-size: 3rem; }
-    .links { display: none; } /* Mobile menu could be added via JS */
+/* --- Custom Cursor --- */
+.cursor {
+    width: 20px;
+    height: 20px;
+    background: var(--purple);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease;
 }
