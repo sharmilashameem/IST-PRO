@@ -1,43 +1,36 @@
-// --- Apple-style Scroll Reveal Animation ---
-const observerOptions = {
-    threshold: 0.1
-};
+// Initialize 3D Tilt Effect
+VanillaTilt.init(document.querySelectorAll(".tilt-card, .profile-container"), {
+    max: 15,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.2,
+});
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
+// Custom Cursor Movement
+const cursor = document.querySelector('.cursor');
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+});
+
+// Reveal Animations on Scroll
+const reveal = () => {
+    const reveals = document.querySelectorAll('.glass-card');
+    reveals.forEach(el => {
+        const windowHeight = window.innerHeight;
+        const revealTop = el.getBoundingClientRect().top;
+        if (revealTop < windowHeight - 150) {
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0) scale(1)";
         }
     });
-}, observerOptions);
+};
 
-// Apply initial hidden state and observe elements
-document.querySelectorAll('.glass-card, .skill-card, .timeline-item').forEach(el => {
+window.addEventListener('scroll', reveal);
+
+// Initial state for reveal
+document.querySelectorAll('.glass-card').forEach(el => {
     el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-    el.style.transition = "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
-    observer.observe(el);
-});
-
-// --- Smooth Scrolling for Navigation ---
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
-// --- Dynamic Navbar Background on Scroll ---
-window.addEventListener('scroll', () => {
-    const nav = document.querySelector('.glass-nav');
-    if (window.scrollY > 50) {
-        nav.style.background = "rgba(0, 0, 0, 0.9)";
-        nav.style.borderBottom = "1px solid rgba(46, 16, 101, 0.5)"; // Deep purple glow
-    } else {
-        nav.style.background = "rgba(0, 0, 0, 0.8)";
-        nav.style.borderBottom = "1px solid rgba(255, 255, 255, 0.1)";
-    }
+    el.style.transform = "translateY(50px) scale(0.9)";
+    el.style.transition = "all 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67)";
 });
