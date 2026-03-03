@@ -1,71 +1,90 @@
 :root {
-    --purple: #6366f1;
+    /* Advanced Medical Palette */
+    --base-dark: #0a0518;
     --deep-purple: #2e1065;
-    --glass: rgba(255, 255, 255, 0.4);
-    --border: rgba(255, 255, 255, 0.6);
+    --electric-purple: #7c3aed;
+    --medical-cyan: #22d3ee;
+    --frost-white: rgba(255, 255, 255, 0.08);
+    --border-glow: rgba(124, 58, 237, 0.3);
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none; /* For custom cursor */
+    cursor: none; /* Custom cursor feels more premium */
 }
 
 body {
+    background-color: var(--base-dark);
+    color: var(--text-primary);
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background: #f0f2f5;
     overflow-x: hidden;
-    color: var(--deep-purple);
+    line-height: 1.6;
 }
 
-/* --- Fluid Background --- */
+/* --- The Aurora Background (Fluid & Interactive) --- */
 .gradient-bg {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     z-index: -1;
-    background: #fff;
-    filter: blur(80px);
+    background: radial-gradient(circle at 0% 0%, #1e1b4b 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, #2e1065 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, #0f172a 0%, #000 100%);
+    filter: contrast(1.1);
 }
 
+/* Floating 3D Orbs for Depth */
 .ball {
     position: absolute;
     border-radius: 50%;
-    animation: move 20s infinite alternate;
+    filter: blur(100px);
+    opacity: 0.5;
+    animation: float 25s infinite alternate ease-in-out;
 }
 
-.ball-1 { width: 500px; height: 500px; background: #d8b4fe; top: -10%; left: -10%; }
-.ball-2 { width: 600px; height: 600px; background: #818cf8; bottom: -10%; right: -10%; animation-delay: -5s; }
-.ball-3 { width: 400px; height: 400px; background: #22d3ee; top: 40%; left: 30%; animation-delay: -10s; }
+.ball-1 { width: 600px; height: 600px; background: var(--electric-purple); top: -10%; left: -5%; }
+.ball-2 { width: 500px; height: 500px; background: var(--medical-cyan); bottom: -10%; right: -5%; animation-delay: -5s; }
 
-@keyframes move {
-    from { transform: translate(0, 0) rotate(0deg); }
-    to { transform: translate(100px, 100px) rotate(360deg); }
+@keyframes float {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(100px, 50px) scale(1.2); }
 }
 
-/* --- Frosty Glass Elements --- */
-.glass-nav, .glass-card {
-    background: var(--glass);
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-}
-
+/* --- Apple-Style Floating Nav --- */
 .glass-nav {
     position: fixed;
-    top: 20px;
+    top: 25px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
-    max-width: 800px;
-    padding: 15px 30px;
+    max-width: 1000px;
+    background: rgba(15, 10, 30, 0.6);
+    backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid var(--border-glow);
+    border-radius: 40px;
+    padding: 15px 40px;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-/* --- Hero & 3D Profile --- */
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #fff, var(--medical-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- Advanced Hero Section --- */
 .hero {
     height: 100vh;
     display: flex;
@@ -73,51 +92,95 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
+    perspective: 1000px;
 }
 
 .profile-container {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    padding: 10px;
-    background: white;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    width: 220px;
+    height: 220px;
+    border-radius: 60px; /* Squircle shape like Apple icons */
+    overflow: hidden;
+    border: 3px solid var(--medical-cyan);
+    box-shadow: 0 0 30px var(--border-glow);
     margin-bottom: 30px;
-    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.profile-image img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
+.profile-container:hover {
+    transform: rotateY(15deg) rotateX(10deg);
 }
 
-.hero-text h1 { font-size: 4rem; font-weight: 800; letter-spacing: -2px; }
-.badge { background: white; padding: 5px 20px; border-radius: 20px; display: inline-block; margin: 10px 0; font-weight: 600; }
-
-/* --- Cards Grid --- */
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    padding: 50px;
+.hero-text h1 {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 800;
+    letter-spacing: -3px;
+    background: linear-gradient(to bottom, #fff 30%, var(--medical-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
+/* --- Experience & Skills Cards --- */
 .glass-card {
+    background: var(--frost-white);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glow);
+    border-radius: 32px;
     padding: 40px;
-    transition: 0.3s ease;
+    margin-bottom: 30px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    transition: 0.5s;
+}
+
+.glass-card:hover::before {
+    left: 100%;
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--medical-cyan);
+}
+
+.tag {
+    color: var(--medical-cyan);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 10px;
 }
 
 /* --- Custom Cursor --- */
 .cursor {
-    width: 20px;
-    height: 20px;
-    background: var(--purple);
+    width: 15px;
+    height: 15px;
+    background: #fff;
     border-radius: 50%;
     position: fixed;
     pointer-events: none;
     z-index: 9999;
     mix-blend-mode: difference;
-    transition: transform 0.1s ease;
+    transition: transform 0.15s ease-out;
+}
+
+/* --- Scroll Progress Bar --- */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--medical-cyan);
+    z-index: 1001;
+    width: 0%;
 }
